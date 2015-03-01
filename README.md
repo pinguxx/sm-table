@@ -55,6 +55,7 @@ It accepts the following properties, columns and data or url the only ones manda
 
  * columns, array of columns to display
  * data, data to display, should be an array
+ * url, url to load the data
  * pagination, object with pagination options
  * filter, function to apply the filter
  * onclick, function to call when a cell is clicked
@@ -68,7 +69,7 @@ It accepts the following properties, columns and data or url the only ones manda
     * **notSorted**, applied to the header when its not being sorted, defaults ``
     * **disabled**, applied to the disabled headers, defaults `disabled`
     
-## Coumns Definitions
+### Coumns Definitions
 
 The array of columns can be either an array of strings with the fields you want to display or an array of objects, that must have a field at least
 column:
@@ -87,3 +88,31 @@ column:
     * getter, the get function for the current field
  * sortable: boolean to make the column sortable,
  * get: function to format the display value of the column, must return a string or an m element, it receives the current item object
+
+## Functions
+Creating a table
+```JavaScrit
+var table = new Table({
+    colums: ['id', 'name']
+});
+```
+Loading the view table, you can pass data again to override the current data
+```JavaScrit
+m('div', table.view())
+m('div', table.view(data))
+```
+You can jump to a page if the table is using pagination
+```JavaScrit
+table.goToPage(2);
+```
+You can get the cell, row or data from an event started inside the cells
+```JavaScrit
+table.getCell(e); //<td></td>
+table.getRow(e); //<tr></tr>
+table.getRow(cell); //<tr></tr>
+table.getData(e); //Object
+```
+You can also update the data with
+```JavaScrit
+table.setData(data);
+```
