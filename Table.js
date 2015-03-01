@@ -68,23 +68,24 @@ var Table = function (properties) {
         return obj1;
     }
 
-    /*function insertTextAtIndices(str, text) {
-        return str.replace(/./g, function(char, index) {
-            return text[index] ? text[index] + char : char;
-        });
-    };*/
-
     function buildHeaders(columns) {
+        var sortedAscending = table.vm.classes ? (table.vm.classes.sortingAscending || 'sorted ascending') : 'sorted ascending',
+            sortedDescending = table.vm.classes ? (table.vm.classes.sortedDescending || 'sorted descending') : 'sorted descending',
+            notSorted = table.vm.classes ? (table.vm.classes.notSorted || '') : '',
+            disabled = table.vm.classes ? (table.vm.classes.notSorted || 'disabled') : 'disabled';
         return columns.map(function (obj) {
             var field = getField(obj);
             //TODO: get up/down/both classes from properties and merge
             if (Object.prototype.toString.call(obj) === Object.prototype.toString.call('')) {
                 //we have a string
+                columnsGet[field] = function (item) {
+                    return item;
+                };
                 columnsRender[field] = function (item) {
                     return item;
                 };
                 return m('th', {
-                    'class': sorting[field] ? (sorting[field]() ? 'sorted descending' : 'sorted ascending') : 'both',
+                    'class': sorting[field] ? (sorting[field]() ? (' ' + sortedAscending) : (' ' + sortedDescending)) : (' ' + notSorted),
                     onclick: sortData.bind(this, defaultSort, field, table.vm.data)
                 }, field);
             } else {
@@ -98,8 +99,8 @@ var Table = function (properties) {
                     return columnsGet[field](item);
                 };
                 return m('th', {
-                    'class': (sorting[field] ? (sorting[field]() ? 'sorted descending' : 'sorted ascending') : 'both') +
-                        ((obj.sortable === undefined || obj.sortable === true) ? '' : ' disabled'),
+                    'class': (sorting[field] ? (sorting[field]() ? (' ' + sortedAscending) : (' ' + sortedDescending)) : (' ' + notSorted)) +
+                        ((obj.sortable === undefined || obj.sortable === true) ? '' : (' ' + disabled)),
                     onclick: (obj.sortable === undefined || obj.sortable === true) ? sortData.bind(this, obj.sort || defaultSort, field, table.vm.data, columnsGet[field]) : ''
                 }, obj.label || field);
             }
@@ -151,20 +152,16 @@ var Table = function (properties) {
     function showTable(data) {
         table.vm.originaldata = data;
         if (table.vm.filter) {
-            if (Object.prototype.toString.call(table.vm.filter) === Object.prototype.toString.call({})) {
-                table.vm.data = data.filter(table.vm.filter.function);
-            } else {
-                table.vm.data = data.filter(table.vm.filter);
-            }
+            table.vm.data = data.filter(table.vm.filter);
         } else {
             table.vm.data = data;
         }
         if (table.vm.pagination) {
-            pagination.calculatePagination(table.vm.data, table.vm.pagination.rowsperpage || 10);
+            pagination.calculatePagination(table.vm.data, table.vm.pagination.rowsperpage || 10, table.vm.pagination.classes);
         }
         table.vm.minHeight = table.vm.minHeight || 0;
         var attr = {
-                'class': 'ui table sortable'
+                'class': table.vm.classes ? (table.vm.classes.table || 'ui table sortable') : 'ui table sortable'
             },
             header = buildHeaders(table.vm.columns),
             body;
@@ -175,19 +172,21 @@ var Table = function (properties) {
                 m('tr', [
                     m('td', {
                         colspan: table.vm.columns.length,
-                        class: 'center aligned',
+                        'class': table.vm.classes ? (table.vm.classes.columnLoading || 'center aligned') : 'center aligned'
                     }, [
-                        m('.ui.active.loader.inline', '')
+                        m('div', {
+                            'class': table.vm.classes ? (table.vm.classes.loader || 'ui active loader inline') : 'ui active loader inline'
+                        }, '')
                     ])
                 ])
             ]);
         } else if (table.vm.data.length) {
             body = m('tbody', {
                 onclick: function (e) {
+                    m.redraw.strategy("none");
                     if (table.vm.onclick) {
                         table.vm.onclick.call(table.getCell(e), e, table, this.parentNode);
                     }
-                    m.redraw.strategy("none");
                 }
             }, buildBody(table.vm.columns, table.vm.data));
         } else {
@@ -195,7 +194,7 @@ var Table = function (properties) {
                 m('tr', [
                     m('td', {
                         colspan: table.vm.columns.length,
-                        class: 'center aligned',
+                        'class': table.vm.classes ? (table.vm.classes.columnNoResults || 'center aligned') : 'center aligned'
                     }, 'No Results Found')
                 ])
             ]);

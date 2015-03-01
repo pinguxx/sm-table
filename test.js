@@ -78,17 +78,17 @@
             pagination: {
                 rowsperpage: 10
             },
-            filter: {
-                fields : ['name'],
-                'function' : function (item) {
-                    return item.name().indexOf(module.vm.filter()) > -1;
-                }
+            filter: function (item) {
+                return item.name().indexOf(module.vm.filter()) > -1;
             },
             onclick: function (e, table, tableEl) {
                 console.log(e, table, this, tableEl);
                 console.log(table.getCell(e));
                 console.log(table.getRow(e));
                 console.log(table.getData(e));
+            },
+            classes: {
+
             }
         });
     };
