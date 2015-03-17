@@ -8,15 +8,15 @@
     for (i = 1; i < 11; i += 1) {
         array.push({
             id: i,
-            name: i + 'name'
+            name: 'name ' + i
         });
     }
 
     for (i = 1; i < 5111; i += 1) {
         array2.push({
             id: m.prop(i),
-            name: m.prop(i + 'name'),
-            location: m.prop(i + 'location'),
+            name: m.prop('name ' + i),
+            location: m.prop('location ' + i),
             city: m.prop(i % 2 ? 'not other' : 'other'),
             status: m.prop(i % 2 ? true : false)
         });
@@ -100,6 +100,7 @@
             m('.ui.sixteen.wide.column', [
                 module.vm.table.view()
             ]),
+            m('h1', 'Pagination Table'),
             m(".row.two.column", [
                 m(".column", {
                     style: 'margin-top:7px;'

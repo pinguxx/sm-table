@@ -1,6 +1,6 @@
 {
   "name": "sm-table",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/pinguxx/sm-table",
   "authors": [
     "Ivan Torres <pinguxx@gmail.com>"
@@ -27,6 +27,6 @@
   ],
   "dependencies": {
     "mithril": "~0.1.30",
-    "sm-pagination": "~0.0.3"
+    "sm-pagination": "~0.0.4"
   }
 }

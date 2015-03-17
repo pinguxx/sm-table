@@ -5,6 +5,10 @@ It requires mithril and semantic-ui-table, semantic-ui-loader and [sm-pgination]
 
 Pagination file can be used with any common.js it is expect for mithril to be in global (m variable) or it will attempt to load it with `require('mithril')`, [webpack](http://webpack.github.io/docs/) its recommended
 
+It can be used with bootstrap also, just pass the correct classes
+
+![Alt text](table_example.png)
+
 ## Code Example
 
 See complete code in test.html
@@ -87,7 +91,8 @@ column:
     * ascending, boolean for ascending
     * getter, the get function for the current field
  * sortable: boolean to make the column sortable,
- * get: function to format the display value of the column, must return a string or an m element, it receives the current item object
+ * get: function to format the display value of the column, must return a string or an m element, it receives the current item object,
+ * classes: class to apply to the column
 
 ## Functions
 Creating a table

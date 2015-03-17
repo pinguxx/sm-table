@@ -100,7 +100,7 @@ var Table = function (properties) {
                 };
                 return m('th', {
                     'class': (sorting[field] ? (sorting[field]() ? (' ' + sortedAscending) : (' ' + sortedDescending)) : (' ' + notSorted)) +
-                        ((obj.sortable === undefined || obj.sortable === true) ? '' : (' ' + disabled)),
+                        ((obj.sortable === undefined || obj.sortable === true) ? '' : (' ' + disabled)) + ' ' + (obj.classes || ''),
                     onclick: (obj.sortable === undefined || obj.sortable === true) ? sortData.bind(this, obj.sort || defaultSort, field, table.vm.data, columnsGet[field]) : ''
                 }, obj.label || field);
             }
