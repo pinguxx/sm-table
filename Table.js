@@ -79,14 +79,14 @@ var Table = function (properties) {
             if (Object.prototype.toString.call(obj) === Object.prototype.toString.call('')) {
                 //we have a string
                 columnsGet[field] = function (item) {
-                    return item;
+                    return item[field];
                 };
                 columnsRender[field] = function (item) {
                     return item;
                 };
                 return m('th', {
                     'class': sorting[field] ? (sorting[field]() ? (' ' + sortedAscending) : (' ' + sortedDescending)) : (' ' + notSorted),
-                    onclick: sortData.bind(this, defaultSort, field, table.vm.data)
+                    onclick: sortData.bind(this, defaultSort, field, table.vm.data, columnsGet[field])
                 }, field);
             } else {
                 columnsGet[field] = obj.get || function (item) {
@@ -224,6 +224,10 @@ var Table = function (properties) {
     table.view = function (data) {
         if (!data) {
             data = table.vm.originaldata || table.vm.data;
+        } else {
+            if (Object.prototype.toString.call(data) !== Object.prototype.toString.call([])) {
+                data = data.data || table.vm.originaldata || table.vm.data;
+            }
         }
         if (Object.prototype.toString.call(data) === functionType) {
             //data its a function, lets get the data

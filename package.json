@@ -1,6 +1,6 @@
 {
   "name": "sm-table",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "mithril semantic-ui table datatable widget",
   "main": "Table.js",
   "scripts": {
