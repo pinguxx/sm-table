@@ -9,9 +9,9 @@ It can be used with bootstrap also, just pass the correct classes
 
 ![Alt text](table_example.png)
 
-## Code Example
+## Demo
 
-See complete code in test.html
+[Demo](http://pinguxx.github.io/sm-table/)
 
 ```html
 <!DOCTYPE html>
