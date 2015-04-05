@@ -1,7 +1,7 @@
 # sm-table
 Mithril semantic-ui data table widget
 
-It requires mithril and semantic-ui-table, semantic-ui-loader and [sm-pgination](https://github.com/pinguxx/sm-pagination) if you need pagination
+It requires mithril and semantic-ui-table, semantic-ui-loader and [sm-pagination](https://github.com/pinguxx/sm-pagination) if you need pagination
 
 Pagination file can be used with any common.js it is expect for mithril to be in global (m variable) or it will attempt to load it with `require('mithril')`, [webpack](http://webpack.github.io/docs/) its recommended
 
