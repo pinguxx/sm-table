@@ -99,10 +99,10 @@
             m('h1', 'Basic Table'),
             m('.ui.sixteen.wide.column', [
                 //module.vm.table.view()
-                m.component(Table, {
+                /*m.component(Table, {
                     columns: ['id', 'name'],
                     data: module.vm.customers
-                })
+                })*/
             ]),
             m('h1', 'Pagination Table'),
             m(".row.two.column", [
@@ -172,10 +172,10 @@
                             console.log(e, table, this, tableEl);
                             console.log(table.getCell(e));
                             console.log(table.getRow(e));
-                            console.log(table.getData(e));
+                            console.log(table.getData(e).name());
                         },
                         classes: {
-
+							//table: 'table table-striped table-bordered'
                         }
                     })
                 ])
