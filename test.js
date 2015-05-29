@@ -31,7 +31,7 @@
         this.customers = data;
         this.rowsperpage = 10;
         this.filter = m.prop('');
-        this.table = new Table({
+        /*this.table = new Table({
             columns: ['id', 'name'],
             data: data
         });
@@ -40,7 +40,7 @@
                 {
                     field: 'name',
                     label: 'Name',
-                    format: function (val, obj/*, celAttr, rowAttr, idx, getter*/) {
+                    format: function (val, obj, celAttr, rowAttr, idx, getter) {
                         return obj.name() ?
                             m('a', {
                                 href: '/edit/' + obj.id(),
@@ -90,7 +90,7 @@
             classes: {
 
             }
-        });
+        });*/
     };
 
 
@@ -98,7 +98,11 @@
         return m('.ui.grid.page', [
             m('h1', 'Basic Table'),
             m('.ui.sixteen.wide.column', [
-                module.vm.table.view()
+                //module.vm.table.view()
+                m.component(Table, {
+                    columns: ['id', 'name'],
+                    data: module.vm.customers
+                })
             ]),
             m('h1', 'Pagination Table'),
             m(".row.two.column", [
@@ -118,9 +122,65 @@
             ]),
             m(".row.rs-nopaddingtop", [
                 m(".ui.column", [
-                    module.vm.table2.view()
+                    m.component(Table, {
+                        columns: [
+                            {
+                                field: 'name',
+                                label: 'Name',
+                                format: function (val, obj, celAttr, rowAttr, idx, getter) {
+                                    return obj.name() ?
+                                        m('a', {
+                                            href: '/edit/' + obj.id(),
+                                            config: m.route
+                                        }, obj.name()) :
+                                        m('span', '-');
+                                },
+                                sort: function (key, ascending, getter) {
+                                    return function (a, b) {
+                                        var x = getter(a),
+                                            y = getter(b);
+                                        x = ('' + x);
+                                        y = ('' + y);
+                                        return ((x < y) ? -1 : ((x > y) ? 1 : 0)) * (!ascending ? -1 : 1);
+                                    };
+                                }
+                            },
+                            {
+                                field: 'location',
+                                label: 'Location',
+                                get: function (obj) {
+                                    return (obj.location() ? obj.location() + ', ' : '') + (obj.city() ? obj.city() + ' ' : '');
+                                }
+                            },
+                            {
+                                field: 'status',
+                                label: 'Action',
+                                sortable: false,
+                                format: function (val, obj) {
+                                    return !obj.status() ? m("a[href='#']", "Activate") : m("a[href='#']", "Deactivate");
+                                }
+                            }
+                        ],
+                        data: array2,
+                        pagination: {
+                            rowsperpage: 10
+                        },
+                        filter: function (item) {
+                            return item.name().indexOf(module.vm.filter()) > -1;
+                        },
+                        onclick: function (e, table, tableEl) {
+                            console.log(e, table, this, tableEl);
+                            console.log(table.getCell(e));
+                            console.log(table.getRow(e));
+                            console.log(table.getData(e));
+                        },
+                        classes: {
+
+                        }
+                    })
                 ])
             ])
+            
         ]);
     };
 

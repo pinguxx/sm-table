@@ -1,6 +1,6 @@
 {
   "name": "sm-table",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "mithril semantic-ui table datatable widget",
   "main": "Table.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/pinguxx/sm-table",
   "dependencies": {
-    "mithril": "~0.1.30",
-    "sm-pagination": "~0.0.4"
+    "mithril": "~0.2.0",
+    "sm-pagination": "~0.1.0"
   }
 }
