@@ -1,7 +1,7 @@
 # sm-table
 Mithril semantic-ui data table widget
 
-It requires mithril and semantic-ui-table, semantic-ui-loader and [sm-pagination](https://github.com/pinguxx/sm-pagination) if you need pagination
+It requires mithril and semantic-ui-table, semantic-ui-loader and [sm-pagination](https://github.com/pinguxx/sm-pagination) if you need pagination, it can also work with bootstrap
 
 Pagination file can be used with any common.js it is expect for mithril to be in global (m variable) or it will attempt to load it with `require('mithril')`, [webpack](http://webpack.github.io/docs/) its recommended
 
@@ -33,22 +33,18 @@ It can be used with bootstrap also, just pass the correct classes
 module.controller = function () {
     module.vm.init(array);
 };
+
 module.vm = {};
 module.vm.init = function (data) {
     this.customers = data;
     this.rowsperpage = 10;
-    this.table = new Table({
-        columns: ['id', 'name'],
-        data: data
-    });
 };
+
 module.view = function (/*ctrl*/) {
-    return m('.ui.grid.page', [
-        m('h1', 'Basic Table'),
-        m('.ui.sixteen.wide.column', [
-            module.vm.table.view()
-        ])
-    ]);
+    m.component(Table, {
+        columns: ['id', 'name'],
+        data: module.vm.customers
+    })
 };
 
 m.module(window.document.body, module);
@@ -94,18 +90,7 @@ column:
  * get: function to format the display value of the column, must return a string or an m element, it receives the current item object,
  * classes: class to apply to the column
 
-## Functions
-Creating a table
-```JavaScrit
-var table = new Table({
-    colums: ['id', 'name']
-});
-```
-Loading the view table, you can pass data again to override the current data
-```JavaScrit
-m('div', table.view())
-m('div', table.view(data))
-```
+## Function
 You can jump to a page if the table is using pagination
 ```JavaScrit
 table.goToPage(2);
@@ -120,4 +105,21 @@ table.getData(e); //Object
 You can also update the data with
 ```JavaScrit
 table.setData(data);
+```
+
+## Bootstrap
+To  get it working with bootstrap you have to pass the followin classes
+```
+pagination: {
+    rowsperpage: 10,
+    classes: {
+        leftIconClass: 'glyphicon glyphicon-arrow-left',
+        rightIconClass: 'glyphicon glyphicon-arrow-right'
+    }
+},
+classes: {
+    table: 'table table-striped table-bordered',
+    sortingAscending: 'glyphicon glyphicon-chevron-up',
+    sortedDescending: 'glyphicon glyphicon-chevron-down'
+}
 ```
