@@ -27,6 +27,6 @@
   ],
   "dependencies": {
     "mithril": "~0.2.0",
-    "sm-pagination": "~0.1.0"
+    "sm-pagination": "~0.1.2"
   }
 }
