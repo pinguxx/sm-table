@@ -252,7 +252,7 @@
                     data: ctrl.data,
                     rowsperpage: ctrl.pagination.rowsperpage,
                     pagerender: function (data) {
-                        return m('', {
+                        return m('div', {
                             /*config: setHeight*/
                         }, [
                             m('table', attr, [
